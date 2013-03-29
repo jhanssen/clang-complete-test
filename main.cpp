@@ -118,12 +118,13 @@ void Editor::onTextChanged()
             qWarning("failed to parse translation unit");
         }
     } else {
-        int failure = clang_reparseTranslationUnit(unit, 1, &sourceFile, clang_defaultReparseOptions(unit));
+        /*int failure = clang_reparseTranslationUnit(unit, 1, &sourceFile, clang_defaultReparseOptions(unit));
         if (failure) {
             clang_disposeTranslationUnit(unit);
             unit = 0;
             qWarning("failed to reparse translation unit");
         }
+        */
     }
 
     unsigned numDiags = clang_getNumDiagnostics(unit);
