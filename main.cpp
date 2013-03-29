@@ -9,6 +9,8 @@ public:
     Editor(QWidget* parent = 0);
     ~Editor();
 
+    void addCompileArgument(const char* arg) { compileArgs.push_back(arg); }
+
 private slots:
     void onTextChanged();
     void onCompleteClicked();
@@ -19,6 +21,8 @@ private:
 
     CXIndex idx;
     CXTranslationUnit unit;
+
+    std::vector<const char*> compileArgs;
 };
 
 
@@ -107,7 +111,6 @@ void Editor::onTextChanged()
     sourceFile.Length = data.size();
     if (!unit) {
         // make one
-        std::vector<const char*> compileArgs;
         compileArgs.push_back("-I/usr/include");
         compileArgs.push_back("-I/usr/include/qt4");
         compileArgs.push_back("-I/usr/include/qt4/QtGui");
@@ -143,6 +146,8 @@ int main(int argc, char** argv)
     QApplication app(argc, argv);
 
     Editor editor;
+    for (int i = 1; i < argc; ++i)
+        editor.addCompileArgument(argv[i]);
     editor.resize(300, 300);
     editor.show();
 
