@@ -40,6 +40,9 @@ Editor::Editor(QWidget* parent)
 
 Editor::~Editor()
 {
+    if (unit)
+        clang_disposeTranslationUnit(unit);
+    clang_disposeIndex(idx);
 }
 
 static void warnDiag(const char* prefix, CXDiagnostic diag)
